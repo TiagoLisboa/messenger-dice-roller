@@ -61,13 +61,15 @@ const handleRoll = (api, msg) => {
 	}
 }
 
-login({email: 'tiago.caio.al@gmail.com', password: 'quaresma'}, (err, api) => {
-	if(err) return console.log('err', err)
+if (process.argv[2] && process.argv[3]) {
+	login({email: process.argv[2], password: process.argv[3]}, (err, api) => {
+		if(err) return console.log('err', err)
 
-	api.listen((err, msg) => {
-		// api.sendMessage(msg.body, msg.threadID)	
-		msg.body = msg.body == undefined ? '' : msg.body
-		if(msg.body.indexOf('/roll') >= 0) return handleRoll(api, msg)
+		api.listen((err, msg) => {
+			// api.sendMessage(msg.body, msg.threadID)	
+			msg.body = msg.body == undefined ? '' : msg.body
+			if(msg.body.indexOf('/roll') >= 0) return handleRoll(api, msg)
+		})
 	})
+}
 
-})
